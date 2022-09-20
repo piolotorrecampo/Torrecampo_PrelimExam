@@ -25,10 +25,13 @@
       state: latest
 
   - name: Setting python3 interpreter as default
-    ansible.builtin.command: echo alias python='python3' >> ~/.bashrc
+    shell: | 
+      echo "alias python3='/usr/bin/python'" >> .bashrc
 
   - name: Deploying a motd banner
-    ansible.builtin.command: echo "{{motd_var}}" >> /etc/motd
+    shell: |
+      touch /etc/motd
+      echo "{{motd_var}}" >> /etc/motd
 
   - name: Creating user in both servers
     ansible.builtin.user:
