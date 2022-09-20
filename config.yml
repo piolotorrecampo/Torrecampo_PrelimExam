@@ -1,0 +1,45 @@
+---
+- hosts: all
+  become: true
+  vars:
+    # Packages
+    - python: python3
+    - pip3: python3-pip
+    # Creating a user
+    - name_var: papzi
+    - state_var: present
+    - shell_var: /bin/bash
+    - system_var: no
+    - createhome_var: yes
+    - home_var: /home/papzi
+    # Motd
+    - motd_var: "Amsible Managed node by Piolo"
+  tasks:
+  
+  - name: Installing python3, pip3 and openjdk
+    package: 
+      name: 
+        - "{{python}}"
+        - "{{pip3}}"
+        - "{{javaopenjdk}}"
+      state: latest
+
+  - name: Setting python3 interpreter as default
+    ansible.builtin.command: echo alias python='python3' >> ~/.bashrc
+
+  - name: Deploying a motd banner
+    ansible.builtin.command: echo "{{motd_var}}" >> /etc/motd
+
+  - name: Creating user in both servers
+    ansible.builtin.user:
+      name: "{{name_var}}"
+      state: "{{state_var}}"
+      shell: "{{shell_var}}"
+      system: "{{system_var}}"
+      createhome: "{{createhome_var}}"
+      home: "{{home_var}}"
+
+
+
+
+

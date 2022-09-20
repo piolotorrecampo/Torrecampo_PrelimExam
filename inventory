@@ -1,0 +1,4 @@
+[ubuntu]
+server1 ansible_connection=ssh ansible_user=piolo javaopenjdk=openjdk-8-jdk
+[CentOs]
+centos_gui ansible_connection=ssh ansible_user=piolo javaopenjdk=java-1.8.0-openjdk
